@@ -9,27 +9,43 @@ local darkGrey		= Color(65, 65, 65)
 local w = 108
 local h = 25
 
+local shit = w / R_PRINT.CFG.TimePerIteration
+
+net.Receive("rprint_setIteration", function()
+	local ent = net.ReadEntity()
+	local id = net.ReadInt(32)
+	local reps = net.ReadInt(32)
+	ent.rprint_money = net.ReadInt(32)
+
+	ent.rprint_reps = reps
+
+	if (!timer.Exists("rprint_" .. id)) then
+		timer.Create("rprint_" .. id, R_PRINT.CFG.TimePerIteration, reps, function() 
+			if (reps == 0) then timer.Destroy("rprint_" .. id) print("destroyed fgt") end
+		end)
+		return
+	end
+
+	timer.Destroy("rprint_" .. id)
+	timer.Create("rprint_" .. id, R_PRINT.CFG.TimePerIteration, reps, function()
+		if (reps == 0) then timer.Destroy("rprint_" .. id) print("destroyed fgt") end
+	end)
+end)
+
 function ENT:Draw()
 	self:DrawModel()
 
+	local id = self:EntIndex()
+
 	local timeLeft
-	if (timer.Exists("your_mother")) then
-		timeLeft = timer.TimeLeft("your_mother") * 10.8
-		print(timeLeft)
-		print(timer.RepsLeft("your_mother"))
+	if (timer.Exists("rprint_" .. id)) then
+		timeLeft = timer.TimeLeft("rprint_" .. id) * shit
 		timeLeft = timeLeft - 2
 		if (timeLeft < 0) then
 			timeLeft = 0
 		end
 	else
 		timeLeft = 0
-	end
-
-	local repsLeft
-	if (timer.Exists("your_mother")) then
-		repsLeft = timer.RepsLeft("your_mother")
-	else
-		repsLeft = 0
 	end
 
 	local pos = self:GetPos()
@@ -50,7 +66,7 @@ function ENT:Draw()
 		cam.End3D2D()
 
 		cam.Start3D2D(pos + ang:Up() * 16.3 + ang:Right() * -19.4 + ang:Forward() * 12, ang, 0.1)
-			draw.SimpleText(repsLeft, "rprint_repsDisplay", 0, 0, white, 1, 1)
+			draw.SimpleTextOutlined(self.rprint_reps || 0, "rprint_repsDisplay", 0, 0, white, 1, 1, 1, Color(0, 0, 0))
 		cam.End3D2D()
 
 		ang:RotateAroundAxis(ang:Forward(), -90)
@@ -59,12 +75,7 @@ function ENT:Draw()
 			surface.SetDrawColor(darkGrey)
 			surface.DrawRect(0, 0, 88.5, 30)
 			
-			draw.SimpleText(DarkRP.formatMoney(self:GetMoney()), "rprint_moneyDisplay", 88.5/2, 30/2, white, 1, 1)
+			draw.SimpleTextOutlined(DarkRP.formatMoney(self:GetMoney()), "rprint_moneyDisplay", 88.5/2, 30/2, white, 1, 1, 1, Color(0, 0, 0))
 		cam.End3D2D()
 	end
 end
-
--- test command remove later
-concommand.Add("testShit", function()
-	timer.Create("your_mother", R_PRINT.CFG.TimePerIteration, 5, function() end)
-end)

@@ -1,8 +1,8 @@
 -- [[ How many iterations should the printer go through ]] --
-R_PRINT.CFG.NumberOfInterations				= 10
+R_PRINT.CFG.NumberOfIterations				= 10
 
 -- [[ How much time per iteration ]] --
-R_PRINT.CFG.TimePerIteration				= 10
+R_PRINT.CFG.TimePerIteration				= 1
 
 -- [[ How much money should be granted per iteration (random number is chosen between the two values set) ]] --
 R_PRINT.CFG.lowAmount						= 200
