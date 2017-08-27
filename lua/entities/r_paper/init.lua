@@ -14,4 +14,3 @@ function ENT:Initialize()
 	if (phys:IsValid()) then phys:Wake() end
 	
 end
-
