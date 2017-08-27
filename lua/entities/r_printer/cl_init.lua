@@ -64,6 +64,7 @@ function ENT:Draw()
 	end
 end
 
+-- test command remove later
 concommand.Add("testShit", function()
 	timer.Create("your_mother", R_PRINT.CFG.TimePerIteration, 5, function() end)
 end)
