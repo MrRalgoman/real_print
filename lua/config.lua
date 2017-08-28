@@ -22,7 +22,7 @@ R_PRINT.CFG.howManyIterationsGranted		= 10
 R_PRINT.CFG.catchFire						= true
 
 -- [[ How long should the printer be on fire before it blows up ]] --
-R_PRINT.CFG.extinguishTime 					= 5
+R_PRINT.CFG.extinguishTime 					= 5 
 
 -- [[ How many hits from the extinguisher should it take to extinguish a printer fire? ]] --
 R_PRINT.CFG.extinguishHits					= 10
