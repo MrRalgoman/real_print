@@ -9,8 +9,6 @@ local darkGrey		= Color(65, 65, 65)
 local w = 108
 local h = 25
 
-local shit = w / R_PRINT.CFG.TimePerIteration
-
 net.Receive("rprint_setIteration", function()
 	local ent = net.ReadEntity()
 	local id = net.ReadInt(32)
@@ -20,21 +18,35 @@ net.Receive("rprint_setIteration", function()
 	ent.rprint_reps = reps
 
 	if (!timer.Exists("rprint_" .. id)) then
-		timer.Create("rprint_" .. id, R_PRINT.CFG.TimePerIteration, reps, function() 
-			if (reps == 0) then timer.Destroy("rprint_" .. id) print("destroyed fgt") end
+		timer.Create("rprint_" .. id, R_PRINT.CFG.TimePerIteration, reps, function()
+			if (reps == 0) then timer.Destroy("rprint_" .. id) end
 		end)
 		return
 	end
 
 	timer.Destroy("rprint_" .. id)
 	timer.Create("rprint_" .. id, R_PRINT.CFG.TimePerIteration, reps, function()
-		if (reps == 0) then timer.Destroy("rprint_" .. id) print("destroyed fgt") end
+		if (reps == 0) then timer.Destroy("rprint_" .. id) end
 	end)
+end)
+
+net.Receive("rprint_pauseTimer", function()
+	local id = net.ReadInt(32)
+	if (!timer.Exists("rprint_" .. id)) then return end
+	timer.Pause("rprint_" .. id)
+end)
+
+net.Receive("rprint_resumeTimer", function()
+	local id = net.ReadInt(32)
+	if (!timer.Exists("rprint_" .. id)) then return end
+	timer.UnPause("rprint_" .. id)
 end)
 
 function ENT:Draw()
 	self:DrawModel()
 
+
+	local shit = w / R_PRINT.CFG.TimePerIteration
 	local id = self:EntIndex()
 
 	local timeLeft
@@ -59,9 +71,9 @@ function ENT:Draw()
 			surface.SetDrawColor(grey)
 			surface.DrawRect(-1, -1, w + 2, h + 2)
 
-			surface.SetDrawColor(green)
+			surface.SetDrawColor(self:rprint_determineBarColor()[1])
 			surface.DrawRect(1, 1, timeLeft, h - 2)
-			surface.SetDrawColor(greenShade)
+			surface.SetDrawColor(self:rprint_determineBarColor()[2])
 			surface.DrawRect(1, 1, timeLeft, h/5)
 		cam.End3D2D()
 
@@ -75,7 +87,7 @@ function ENT:Draw()
 			surface.SetDrawColor(darkGrey)
 			surface.DrawRect(0, 0, 88.5, 30)
 			
-			draw.SimpleTextOutlined(DarkRP.formatMoney(self:GetMoney()), "rprint_moneyDisplay", 88.5/2, 30/2, white, 1, 1, 1, Color(0, 0, 0))
+			draw.SimpleTextOutlined(DarkRP.formatMoney(self:rprint_GetMoney()), "rprint_moneyDisplay", 88.5/2, 30/2, white, 1, 1, 1, Color(0, 0, 0))
 		cam.End3D2D()
 	end
 end

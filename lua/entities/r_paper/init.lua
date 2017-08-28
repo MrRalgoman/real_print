@@ -13,6 +13,7 @@ function ENT:Initialize()
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then phys:Wake() end
 	
+	self.rprint_health = R_PRINT.CFG.paperHealth
 	self.iterationsGranted = R_PRINT.CFG.howManyIterationsGranted
 end
 
