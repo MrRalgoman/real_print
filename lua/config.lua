@@ -1,5 +1,5 @@
 -- [[ Notification type, 1 for chat message or 0 for darkrp notification ]] --
-R_RPINT.CFG.notificationType = 0
+R_PRINT.CFG.notificationType = 0
 
 -- [[ Printer and paper entity health ]] --
 R_PRINT.CFG.printerHealth					= 200
@@ -20,6 +20,9 @@ R_PRINT.CFG.howManyIterationsGranted		= 10
 
 -- [[ Should the printer have a chance of catching fire? (if false then you can ignore the settings below) ]] --
 R_PRINT.CFG.catchFire						= true
+
+-- [[ How long should the printer be on fire before it blows up ]] --
+R_PRINT.CFG.extinguishTime 					= 5
 
 -- [[ How many hits from the extinguisher should it take to extinguish a printer fire? ]] --
 R_PRINT.CFG.extinguishHits					= 10

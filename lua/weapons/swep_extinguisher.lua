@@ -78,13 +78,13 @@ function SWEP:ShootWater()
 			hitCount = 0
 			if (SERVER) then
 				ent:Extinguish()
-				--R_PRINT.ResumeTimer(ent:EntIndex())
+				R_PRINT.ResumeTimer(ent:EntIndex())
 				Timer.Destroy("extinguish_" .. ent:EntIndex())
 			end
 		end
-	elseif (ent:IsOnFire()) then
-		--R_PRINT.Notify(owner, "You are too far away!")
-	elseif (!ent:IsOnFire()) then
-		--R_PRINT.Notify(owner, "You can't extinguish something that isn't on fire!")
+	elseif (traceData.StartPos:Distance(ent:GetPos()) >= 150 && ent:IsOnFire()) then
+		R_PRINT.Notify("You are too far away!")
+	elseif (traceData.StartPos:Distance(ent:GetPos()) <= 150 && !ent:IsOnFire()) then
+		R_PRINT.Notify("You can't extinguish something that isn't on fire!")
 	end
 end

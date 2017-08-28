@@ -34,24 +34,6 @@ function R_PRINT.ResumeTimer(id)
 	net.Send(player.GetAll())
 end
 
-local canMessage = true
-
-function R_PRINT.Notify(ply, message)
-	if (R_RPINT.CFG.notificationType == 0) then
-		if (canMessage) then
-			canMessage = false
-			DarkRP.Notify(ply, 1, 3, message)
-			timer.Simple(5, function() canMessage = true end)
-		end
-	else
-		if (canMessage) then
-			canMessage = false
-			ply:ChatPrint(message)
-			timer.Simple(5, function() canMessage = true end)
-		end
-	end
-end
-
 local entClass = FindMetaTable("Entity")
 
 function entClass:rprint_Explode()

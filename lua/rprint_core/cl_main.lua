@@ -18,3 +18,22 @@ function entClass:rprint_determineBarColor()
 		return {[1] = Color(0, 255, 0), [2] = Color(75, 255, 75)}
 	end
 end
+
+local canMessage = true
+
+function R_PRINT.Notify(message)
+	print("got it cunt")
+	if (R_PRINT.CFG.notificationType == 0) then
+		if (canMessage) then
+			canMessage = false
+			notification.AddLegacy(message, 1, 3)
+			timer.Simple(2, function() canMessage = true end)
+		end
+	else
+		if (canMessage) then
+			canMessage = false
+			chat.AddText("[R_Print] " .. message)
+			timer.Simple(2, function() canMessage = true end)
+		end
+	end
+end
