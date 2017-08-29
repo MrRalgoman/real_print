@@ -55,6 +55,18 @@ function SWEP:PrimaryAttack()
 	self:ShootWater()
 end
 
+if (CLIENT) then
+	function SWEP:DrawWorldModel()
+		self:SetModel("models/props/cs_office/fire_extinguisher.mdl")
+		self:DrawModel()
+	end
+
+	function SWEP:DrawWorldModelTranslucent()
+		self:SetModel("models/props/cs_office/fire_extinguisher.mdl")
+		self:DrawModel()
+	end
+end
+
 local hitCount = 0
 
 function SWEP:ShootWater()
@@ -79,12 +91,10 @@ function SWEP:ShootWater()
 			if (SERVER) then
 				ent:Extinguish()
 				R_PRINT.ResumeTimer(ent:EntIndex())
-				Timer.Destroy("extinguish_" .. ent:EntIndex())
+				timer.Destroy("extinguish_" .. ent:EntIndex())
 			end
 		end
 	elseif (traceData.StartPos:Distance(ent:GetPos()) >= 150 && ent:IsOnFire()) then
 		R_PRINT.Notify("You are too far away!")
-	elseif (traceData.StartPos:Distance(ent:GetPos()) <= 150 && !ent:IsOnFire()) then
-		R_PRINT.Notify("You can't extinguish something that isn't on fire!")
 	end
 end

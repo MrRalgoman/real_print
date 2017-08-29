@@ -1,6 +1,6 @@
 surface.CreateFont("rprint_moneyDisplay", {
 	font = "Roboto",
-	size = 25,
+	size = 22,
 	weight = 500,
 })
 
