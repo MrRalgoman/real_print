@@ -13,6 +13,14 @@ function ENT:Initialize()
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then phys:Wake() end
 	
-	self.rprint_health = R_PRINT.CFG.paperHealth
+	self.health = R_PRINT.CFG.paperHealth
 	self.iterationsGranted = R_PRINT.CFG.howManyIterationsGranted
+end
+
+function ENT:OnTakeDamage(data)
+	local dmg = data:GetDamage()
+
+	self.health = self.health - dmg
+	
+	if (self.health <= 0) then self:Remove() end
 end

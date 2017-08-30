@@ -31,7 +31,7 @@ function ENT:Initialize()
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then phys:Wake() end
 
-	self.rprint_health = R_PRINT.CFG.printerHealth
+	self.health = R_PRINT.CFG.printerHealth
 	self.canUse = true
 	self.running = true
 	self.money = 0
@@ -65,11 +65,17 @@ function ENT:Use(activator, caller)
 		print(uprightCD)
 		uprightCD = true
 		local ang = self:GetAngles()
-		local pos = self:GetPos() + Vector(0, 0, 5)
+		local pos = self:GetPos() + Vector(0, 0, 1)
 
 		self:SetAngles(Angle(0, 180 + caller:GetAngles().yaw, 0))
 		self:SetPos(pos)
+
+		local phys = self:GetPhysicsObject()
+		if (phys:IsValid()) then phys:Wake() end
+
 		timer.Simple(5, function() uprightCD = false end)
+	elseif (uprightCD && useCount == 2) then
+		DarkRP.notify(caller, 1, 3, "You can't do that yet!")
 	end
 end
 
@@ -97,6 +103,18 @@ function ENT:Explode()
 	end)
 end
 
+function ENT:OnTakeDamage(data)
+	local dmg = data:GetDamage()
+
+	self.health = self.health - dmg
+	
+	if (self.health <= 0) then 
+		self:Ignite(1) 
+		timer.Simple(1, function() 
+			self:Explode() 
+		end) 
+	end
+end
 
 function ENT:SetRunning(status)
 	self.running = status
