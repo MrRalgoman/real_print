@@ -9,14 +9,14 @@ R_PRINT.CFG.paperHealth						= 100
 R_PRINT.CFG.NumberOfIterations				= 10
 
 -- [[ How much time per iteration ]] --
-R_PRINT.CFG.TimePerIteration				= 1
+R_PRINT.CFG.TimePerIteration				= 2
 
 -- [[ How much money should be granted per iteration (random number is chosen between the two values set) ]] --
 R_PRINT.CFG.lowAmount						= 200
 R_PRINT.CFG.highAmount						= 300
 
 -- [[ How many iterations should one single paper entity grant ]] --
-R_PRINT.CFG.howManyIterationsGranted		= 10
+R_PRINT.CFG.howManyIterationsGranted		= 3
 
 -- [[ Should the printer have a chance of catching fire? (if false then you can ignore the settings below) ]] --
 R_PRINT.CFG.catchFire						= true
@@ -40,7 +40,7 @@ R_PRINT.CFG.lowChanceOfFire	= {
 	[10]									= true
 }
 -- [[ The chance of catching fire, the number is a percent out of 100 ]] --
-R_PRINT.CFG.lowChancePercent				= 100
+R_PRINT.CFG.lowChancePercent				= 0
 
 -- [[ ----- Moderate ----- ]] --
 
@@ -51,7 +51,7 @@ R_PRINT.CFG.moderateChanceOfFire = {
 	[4]										= true
 }
 -- [[ The chance of catching fire, the number is a percent out of 100 ]] --
-R_PRINT.CFG.moderateChancePercent			= 100
+R_PRINT.CFG.moderateChancePercent			= 0
 
 -- [[ ----- High ----- ]] --
 

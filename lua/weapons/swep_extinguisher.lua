@@ -55,15 +55,13 @@ function SWEP:PrimaryAttack()
 	self:ShootWater()
 end
 
-if (CLIENT) then
-	function SWEP:DrawWorldModel()
-		self:SetModel("models/props/cs_office/fire_extinguisher.mdl")
-		self:DrawModel()
-	end
+function SWEP:Think()
+	self.thinkOwner = self:GetOwner()
+end
 
-	function SWEP:DrawWorldModelTranslucent()
-		self:SetModel("models/props/cs_office/fire_extinguisher.mdl")
-		self:DrawModel()
+if (SERVER) then
+	function SWEP:OnDrop()
+		R_PRINT.ExtModelInit(self.thinkOwner, self)
 	end
 end
 

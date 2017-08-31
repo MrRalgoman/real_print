@@ -44,13 +44,12 @@ local uprightCD = false
 local canUse = true
 
 function ENT:Use(activator, caller)
-	if (self.money != 0 && canUse && !self:IsOnFire()) then
+	if (self.money != 0 && !self:IsOnFire()) then
 		canUse = false
 		local pos = self:GetPos()
 		local ang = self:GetAngles()
 
-		DarkRP.createMoneyBag(pos + ang:Up() * 50 + ang:Forward() * 5, self.money)
-		print(self.money)
+		local mny = DarkRP.createMoneyBag(pos + ang:Up() * 50 + ang:Forward() * 5, self.money)
 		self:AddMoney(-self.money)
 
 		self:EmitSound("buttons/button5.wav")
@@ -62,7 +61,6 @@ function ENT:Use(activator, caller)
 	useCount = useCount + 1
 	timer.Simple(0.2, function() useCount = 0 end)
 	if (useCount == 2 && !uprightCD) then
-		print(uprightCD)
 		uprightCD = true
 		local ang = self:GetAngles()
 		local pos = self:GetPos() + Vector(0, 0, 1)
@@ -189,7 +187,7 @@ function ENT:HandleFireChance()
 	local id = "extinguish_" .. self:EntIndex()
 	local rep = self.currentRep
 	local percent
-	local explodeChance = math.random(100, 0)
+	local explodeChance = math.random(100, 1)
 
 	if (R_PRINT.CFG.lowChanceOfFire[rep]) then
 		percent = R_PRINT.CFG.lowChancePercent

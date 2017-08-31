@@ -43,7 +43,6 @@ end
 
 function ENT:DetermineBarColor()
 	local iteration = self:GetRep()
-	print(iteration)
 
 	if (R_PRINT.CFG.lowChanceOfFire[iteration]) then
 		return {[1] = Color(0, 255, 0), [2] = Color(75, 255, 75)}
@@ -58,7 +57,7 @@ end
 
 net.Receive("rprint_updateClient", function()
 	local ent = net.ReadEntity()
-	if (!ent:IsRunning()) then print("Initing Print") ent:InitPrint() return end
+	if (!ent:IsRunning()) then ent:InitPrint() return end
 	ent:AddRep(R_PRINT.CFG.howManyIterationsGranted)
 end)
 
