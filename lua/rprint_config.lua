@@ -1,3 +1,5 @@
+-- Like this addon? Buy me a beer :) PayPal.Me/LucasMason
+
 -- [[ Notification type, 1 for chat message or 0 for darkrp notification ]] --
 R_PRINT.CFG.notificationType 				= 0
 
